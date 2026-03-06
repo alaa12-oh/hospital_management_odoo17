@@ -1,0 +1,57 @@
+<odoo>
+    <!-- Form View -->
+    <record id="view_clinic_appointment_form" model="ir.ui.view">
+        <field name="name">clinic.appointment.form</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+                <sheet>
+                    <group>
+                        <field name="patient_id"/>
+                        <field name="doctor_id"/>
+                        <field name="appointment_date"/>
+                        <field name="slot_id"/>
+                        <field name="state" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_confirm" type="object" string="Confirm"
+                                attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <button name="action_cancel" type="object" string="Cancel"
+                                attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <button string="Save" type="object" class="oe_highlight"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_clinic_appointment_tree" model="ir.ui.view">
+        <field name="name">clinic.appointment.tree</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="appointment_date"/>
+                <field name="slot_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_clinic_appointment_search" model="ir.ui.view">
+        <field name="name">clinic.appointment.search</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="state"/>
+                <filter string="Today's Appointments" name="today_appointments"
+                        domain="[('appointment_date','=',context_today())]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
