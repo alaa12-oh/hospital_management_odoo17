@@ -1,0 +1,76 @@
+<odoo>
+
+    <!-- Tree View: عرض الجدول -->
+    <record id="view_doctor_slot_tree" model="ir.ui.view">
+        <field name="name">doctor.slot.tree</field>
+        <field name="model">doctor.slot</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="doctor_id"/>
+                <field name="date"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View: عرض التفاصيل -->
+    <record id="view_doctor_slot_form" model="ir.ui.view">
+        <field name="name">doctor.slot.form</field>
+        <field name="model">doctor.slot</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_book"
+                            string="Book"
+                            type="object"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="doctor_id"/>
+                        <field name="date"/>
+                        <field name="start_time" widget="float_time"/>
+                        <field name="end_time" widget="float_time"/>
+                        <field name="state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View: البحث والتجميع -->
+    <record id="view_doctor_slot_search" model="ir.ui.view">
+        <field name="name">doctor.slot.search</field>
+        <field name="model">doctor.slot</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="doctor_id"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state"
+                            string="State"
+                            context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action: ربط views بالموديل -->
+    <record id="action_doctor_slot" model="ir.actions.act_window">
+        <field name="name">Doctor Slots</field>
+        <field name="res_model">doctor.slot</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- القائمة الرئيسية للعيادة -->
+    <menuitem id="clinic_root_menu"
+              name="Clinic"/>
+
+    <!-- القائمة الفرعية لمواعيد الأطباء -->
+    <menuitem id="doctor_slot_menu"
+              name="Doctor Slots"
+              parent="clinic_root_menu"
+              action="action_doctor_slot"/>
+
+</odoo>
