@@ -1,0 +1,180 @@
+<odoo>
+
+    <!-- ========================= -->
+    <!-- Sequence -->
+    <!-- ========================= -->
+
+    <record id="seq_patient_visit" model="ir.sequence">
+        <field name="name">Patient Visit</field>
+        <field name="code">patient.visit</field>
+        <field name="prefix">V</field>
+        <field name="padding">4</field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- Tree View -->
+    <!-- ========================= -->
+
+    <record id="view_patient_visit_tree" model="ir.ui.view">
+        <field name="name">patient.visit.tree</field>
+        <field name="model">patient.visit</field>
+        <field name="arch" type="xml">
+
+            <tree string="Patient Visits">
+
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="visit_type"/>
+                <field name="visit_date"/>
+                <field name="visit_creater"/>
+                <field name="state"/>
+
+            </tree>
+
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- Form View -->
+    <!-- ========================= -->
+
+    <record id="view_patient_visit_form" model="ir.ui.view">
+        <field name="name">patient.visit.form</field>
+        <field name="model">patient.visit</field>
+        <field name="arch" type="xml">
+
+            <form string="Patient Visit">
+
+                <!-- Header -->
+                <header>
+
+                    <button name="action_waiting_payment"
+                        string="Waiting Payment"
+                        type="object"
+                        states="draft"
+                        class="btn-primary"/>
+
+                    <button name="action_waiting_doctor"
+                        string="Waiting Doctor"
+                        type="object"
+                        states="waiting_payment"
+                        class="btn-primary"/>
+
+                    <button name="action_with_doctor"
+                        string="With Doctor"
+                        type="object"
+                        states="waiting_doctor"
+                        class="btn-primary"/>
+
+                    <button name="action_done"
+                        string="Done"
+                        type="object"
+                        states="with_doctor"
+                        class="btn-success"/>
+
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,waiting_payment,waiting_doctor,with_doctor,done"/>
+
+                </header>
+
+
+                <!-- Sheet -->
+                <sheet>
+
+                    <!-- Basic Info -->
+                    <group>
+
+                        <group>
+
+                            <field name="name" readonly="1"/>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+
+                        </group>
+
+                        <group>
+
+                            <field name="visit_type"/>
+                            <field name="visit_date"/>
+                            <field name="visit_creater" readonly="1"/>
+
+                        </group>
+
+                    </group>
+
+
+                    <!-- Tabs -->
+                    <notebook>
+
+                        <!-- Chief Complaint -->
+                        <page string="Chief Complaint">
+
+                            <group>
+
+                                <field name="chief_complaint"/>
+
+                            </group>
+
+                        </page>
+
+
+                        <!-- Diagnosis -->
+                        <page string="Diagnosis">
+
+                            <group>
+
+                                <field name="diagnosis"/>
+
+                            </group>
+
+                        </page>
+
+
+                        <!-- Doctor Notes -->
+                        <page string="Doctor Notes">
+
+                            <group>
+
+                                <field name="note"/>
+
+                            </group>
+
+                        </page>
+                        </notebook>
+
+                </sheet>
+
+            </form>
+
+        </field>
+    </record>
+
+
+
+    <!-- ========================= -->
+    <!-- Action -->
+    <!-- ========================= -->
+
+    <record id="action_patient_visit" model="ir.actions.act_window">
+        <field name="name">Patient Visits</field>
+        <field name="res_model">patient.visit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <!-- ========================= -->
+    <!-- Menu -->
+    <!-- ========================= -->
+
+    <menuitem
+        id="menu_patient_visit"
+        name="Visits"
+        parent="clinic_menu_root"
+        action="action_patient_visit"
+        sequence="4"/>
+
+</odoo>
